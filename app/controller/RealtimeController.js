@@ -40,7 +40,6 @@ const callApiGoogle = (start, stop) => {
 exports.getTrips = async (req, res, next) => {
   try {
     let data = {};
-    let _googleMap = {};
     const location_id = input.checkInputFormat('int', req.query.stop_id);
     const route_id = req.query.route_id;
     let condition = {'routes_detail.locations_id': location_id};
@@ -62,7 +61,7 @@ exports.getTrips = async (req, res, next) => {
         return v.service_latitude + ',' + v.service_longtitude;
       });
       const latLonStart = _.join(allLatLon, '|');
-      _googleMap = await callApiGoogle(latLonStart, latLonStop)
+      const _googleMap = await callApiGoogle(latLonStart, latLonStop)
       //******************** End Call Api ********************//
 
       data = _.map(qPosition, (v, key) => {
